@@ -1,18 +1,88 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
 import './App.css';
+import Header from "./components/Header";
+import "./components/Header.css";
+import ButtonDwonload from './components/ButtonDwonload';
+import ButtonUpload from './components/ButtonUpload';
+
 
 class App extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      files: [],
+      response: [],
+      url: '',
+      uploadead: false      
+    };
+
+    this.handleSubmit = this.handleSubmit.bind(this)
+    this.setState = this.setState.bind(this)
+  }
+
+  handleSubmit(e) {
+    e.preventDefault();
+    
+    const formData = new FormData();
+
+    Array.from(this.fileInput.files).map(file => formData.append('avatar', file, file.name))
+    
+    const FETCH_PARAM = {
+      method: 'POST',
+      headers: {
+        'Accept': 'application/json, */*',
+      },
+      body: formData,
+    };
+
+    fetch('http://localhost:8083/xlsx/convert', FETCH_PARAM)
+      .then(response => {
+        return response.blob()
+      })
+      .then(data => {
+        console.log(data)
+        const url = window.URL.createObjectURL(data)
+        this.setState({
+          response: data,
+          url,
+          uploadead: true
+        });
+      })
+  }
+
+  handleDownload(e) {
+    // e.preventDefault();
+    console.log('test')
+
+    this.setState({
+      uploadead: false
+    })
+    console.log('test-2')
+  }
+
   render() {
+    const { url, uploadead } = this.state;
+      
     return (
       <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <h1 className="App-title">Welcome to React</h1>
-        </header>
-        <p className="App-intro">
-          To get started, edit <code>src/App.js</code> and save to reload.
-        </p>
+        <Header />
+
+        <form className="App_form" encType="multipart/form-data" noValidate onSubmit={this.handleSubmit} accept="/src/*">
+          <div className="App_label">
+            <label>
+              Upload file:
+
+              <input
+                multiple
+                type="file"
+                ref={input => this.fileInput = input} />
+            </label>
+          </div>
+
+          {uploadead 
+            ? <ButtonDwonload url={url} state={this.state} handleDownload={this.handleDownload.bind(this)} />
+            : <ButtonUpload/>}
+        </form>
       </div>
     );
   }

@@ -1,0 +1,191 @@
+.fade {
+	opacity: 0;
+	transition: opacity 0.15s linear;
+}
+
+.fade.in {
+	opacity: 1;
+}
+
+.collapse {
+	display: none;
+}
+
+.collapse.in {
+	display: block;
+}
+
+tr.collapse.in {
+	display: table-row;
+}
+
+tbody.collapse.in {
+	display: table-row-group;
+}
+
+.collapsing {
+	position: relative;
+	height: 0;
+	overflow: hidden;
+	transition-property: height, visibility;
+	transition-duration: 0.35s;
+	transition-timing-function: ease;
+}
+
+body {
+	background-color: #eceef0;
+	font: normal normal 300 18px 'Fira Sans', sans-serif;
+	line-height: 1.15;
+	margin-bottom: 700px;
+}
+
+.k-container {
+	max-width: 1350px;
+	margin: auto;
+	width: 100%;
+}
+
+ul {
+	list-style: none;
+}
+
+a,
+a:hover {
+	text-decoration: none;
+}
+
+.text-center {
+	text-align: center;
+}
+
+.tab-content>.tab-pane {
+	display: none;
+}
+
+.tab-content>.active {
+	display: block;
+}
+
+.k-container {
+	max-width: 1350px;
+	margin: auto;
+	width: 100%;
+}
+
+.main {
+	background: #229fff;
+	padding: 17px 0;
+	position: relative;
+}
+
+.main__logo {
+	cursor: pointer;
+	display: inline-block;
+	background-image: url('../static/images/kyivstar-logo.svg');
+	width: 174px;
+	height: 44px;
+	margin: 0 43px 0 20px;
+}
+
+.main__list {
+	list-style: none;
+	padding: 0;
+	position: absolute;
+	left: 237px;
+	right: 220px;
+	top: 17px;
+}
+
+.main__list__item {
+	display: inline-block;
+	padding: 0 43px 0 0;
+}
+
+.main__list__item:last-child {
+	margin: 0;
+	padding-right: 0;
+}
+
+.main__list__link {
+	display: block;
+	color: #d8e8f4;
+	font-weight: 700;
+	line-height: 20px;
+}
+
+.main__list__link:hover span {
+	color: #f5f5f5;
+}
+
+.main__icon-more {
+	display: inline-block;
+}
+
+.main__button-dropdown {
+	position: relative;
+}
+
+.main__dropdown {
+	background-color: #f5f5f5;
+	position: absolute;
+	list-style: none;
+	padding: 15px 0;
+	left: -15px;
+	visibility: hidden;
+}
+
+.main__dropdown .main__list__item {
+	display: block;
+	padding: 0 15px;
+}
+
+.main__dropdown .main__list__link {
+	color: #229fff;
+	font-size: 14px;
+	font-weight: 700;
+	line-height: 20px;
+	white-space: nowrap;
+}
+
+.main__dropdown .main__list__link:hover span {
+	color: #3b4952;
+}
+
+.main__dropdown_open {
+	visibility: visible;
+}
+
+.main__dropdown_open:hover {
+	color: #3b4952;
+}
+
+.main__search {
+	float: right;
+	position: relative;
+	width: 177px;
+	right: 37px;
+	top: 12px;
+}
+
+.main__search input {
+	border: none;
+	background-color: transparent;
+	border-bottom: solid 1px #fff;
+	color: #fff;
+	font-size: 14px;
+	width: 100%;
+}
+
+.main__search button {
+	border: none;
+	background: transparent;
+	position: absolute;
+	right: 0;
+	top: 0;
+	cursor: pointer;
+}
+
+.main__search__icon {
+	display: inline-block;
+	vertical-align: middle;
+}

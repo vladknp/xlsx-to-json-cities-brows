@@ -5,6 +5,10 @@ import "./components/Header.css";
 import ButtonDwonload from './components/ButtonDwonload';
 import ButtonUpload from './components/ButtonUpload';
 
+const PUBLIC_URL = 'https://xlsx-to-json.herokuapp.com/xlsx/convert';
+const LOCAL_URL = 'http://localhost:8083/xlsx/convert';
+
+const urlConvert = process.env.NODE_ENV === 'development' ? LOCAL_URL : PUBLIC_URL;
 
 class App extends Component {
   constructor(props) {
@@ -32,10 +36,11 @@ class App extends Component {
       headers: {
         'Accept': 'application/json, */*',
       },
+      mode: 'cors',
       body: formData,
     };
 
-    fetch('http://localhost:8083/xlsx/convert', FETCH_PARAM)
+    fetch(urlConvert, FETCH_PARAM)
       .then(response => {
         return response.blob()
       })

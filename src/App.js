@@ -34,7 +34,8 @@ class App extends Component {
     const FETCH_PARAM = {
       method: 'POST',
       headers: {
-        'Accept': 'application/json, */*',
+        // 'Accept': 'application/json, */*',
+        // 'Access-Control-Allow-Credentials': true,
       },
       mode: 'cors',
       body: formData,

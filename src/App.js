@@ -6,7 +6,7 @@ import ButtonDwonload from './components/ButtonDwonload';
 import ButtonUpload from './components/ButtonUpload';
 
 const PUBLIC_URL = 'https://xlsx-to-json.herokuapp.com/xlsx/convert';
-const LOCAL_URL = 'http://localhost:443/xlsx/convert';
+const LOCAL_URL = 'http://localhost:8083/xlsx/convert';
 
 const urlConvert =
   process.env.NODE_ENV === 'development' ? LOCAL_URL : PUBLIC_URL;
@@ -16,13 +16,20 @@ class App extends Component {
     super(props);
     this.state = {
       files: [],
-      response: [],
       url: '',
-      uploadead: false,
+      targetInput: '',
     };
 
+    this.handleChangeFiles = this.handleChangeFiles.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.setState = this.setState.bind(this);
+  }
+
+  handleChangeFiles(e) {
+    this.setState({
+      files: Array.from(e.target.files),
+      targetInput: e.target.value,
+    });
   }
 
   handleSubmit(e) {
@@ -30,9 +37,7 @@ class App extends Component {
 
     const formData = new FormData();
 
-    Array.from(this.fileInput.files).map(file =>
-      formData.append('avatar', file, file.name),
-    );
+    this.state.files.map(file => formData.append('avatar', file, file.name));
 
     const FETCH_PARAM = {
       method: 'POST',
@@ -49,28 +54,27 @@ class App extends Component {
         return response.blob();
       })
       .then(data => {
-        console.log(data);
         const url = window.URL.createObjectURL(data);
         this.setState({
-          response: data,
           url,
-          uploadead: true,
         });
       });
   }
 
   handleDownload(e) {
-    // e.preventDefault();
-    console.log('test');
+    this.reset();
+  }
 
+  reset() {
     this.setState({
-      uploadead: false,
+      files: [],
+      url: '',
+      targetInput: '',
     });
-    console.log('test-2');
   }
 
   render() {
-    const { url, uploadead } = this.state;
+    const { files, url, targetInput } = this.state;
 
     return (
       <div className="App">
@@ -85,24 +89,25 @@ class App extends Component {
         >
           <div className="App_label">
             <label>
-              Upload file:
+              Select Files:
               <input
                 multiple
                 type="file"
-                ref={input => (this.fileInput = input)}
+                onChange={this.handleChangeFiles}
+                value={targetInput}
               />
             </label>
           </div>
 
-          {uploadead ? (
-            <ButtonDwonload
-              url={url}
-              state={this.state}
-              handleDownload={this.handleDownload.bind(this)}
-            />
-          ) : (
-            <ButtonUpload />
-          )}
+          {files.length > 0 && url.length < 1 && <ButtonUpload />}
+          {files.length > 0 &&
+            url.length > 0 && (
+              <ButtonDwonload
+                url={url}
+                state={this.state}
+                handleDownload={this.handleDownload.bind(this)}
+              />
+            )}
         </form>
       </div>
     );
